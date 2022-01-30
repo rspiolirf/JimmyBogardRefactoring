@@ -3,7 +3,6 @@ using JimmyRefactoring.Domain;
 using JimmyRefactoring.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using static JimmyRefactoring.Features.Offers.AssignOffer.AssignOfferRequest;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,12 +27,12 @@ app.Run();
 
 static void InitializeDatabase(AppDbContext appDbContext)
 {
-    appDbContext.Members.Add(new Member(1, "rspioli.rf@gmail.com", "Rafael", "Pioli"));
-    appDbContext.Members.Add(new Member(2, "felipe@gmail.com", "Felipe", "Pioli"));
-    appDbContext.Members.Add(new Member(3, "marcelo.pioli@gmail.com", "Marcelo", "Pioli"));
-    appDbContext.Members.Add(new Member(4, "luandra@hotmail.com", "Luandra Pimenta", "Pioli"));
+    appDbContext.Members.Add(new Member(1, "mario.bros@gmail.com", "Mario", "Bros"));
+    appDbContext.Members.Add(new Member(2, "luigi.bros@gmail.com", "Luigi", "Bros"));
+    appDbContext.Members.Add(new Member(3, "princesa.peach@gmail.com", "Princesa", "Peach"));
+    appDbContext.Members.Add(new Member(4, "yoshi.dino@hotmail.com", "Yoshi", "Dino"));
 
-    appDbContext.OfferTypes.Add(new OfferType(1, DateTime.Now, 5, ExpirationType.Fixed, "AliExpress"));
+    appDbContext.OfferTypes.Add(new OfferType(1, DateTime.Now, 5, ExpirationType.Assignment, "AliExpress.com"));
 
     appDbContext.SaveChanges();
 }
