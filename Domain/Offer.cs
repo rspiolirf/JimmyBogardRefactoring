@@ -3,11 +3,12 @@ namespace JimmyRefactoring.Domain;
 public class Offer
 {
     public int Id { get; set; }
-    public Member? MemberAssigned { get; set; }
-    public OfferType? Type { get; set; }
+    public Member MemberAssigned { get; set; }
+    public OfferType Type { get; set; }
     public int Value { get; set; }
     public DateTime DateExpiring { get; set; }
 
+    #pragma warning disable CS8618
     private Offer()
     {
     }

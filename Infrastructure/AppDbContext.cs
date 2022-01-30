@@ -21,5 +21,13 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Member>()
             .HasMany<Offer>(m => m.AssignedOffers)
             .WithOne(o => o.MemberAssigned);
+
+        modelBuilder.Entity<Offer>()
+            .HasKey(o => o.Id);
+
+        modelBuilder.Entity<Offer>()
+            .HasOne<OfferType>(o => o.Type)
+            .WithOne(ot => ot.Offer)
+            .HasForeignKey<OfferType>(ot => ot.OfferId);
     }
 }

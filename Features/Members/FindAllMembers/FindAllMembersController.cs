@@ -12,6 +12,7 @@ public class FindAllMembersController : ControllerBase
     {
         var members = await context.Members
             .Include(o => o.AssignedOffers)
+            .ThenInclude(o => o.Type)
             .ToListAsync();
             
         return Ok(members);
