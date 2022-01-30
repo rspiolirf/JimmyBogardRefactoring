@@ -22,9 +22,11 @@ public class AssignOfferRequest : IRequest
 
         public async Task<Unit> Handle(AssignOfferRequest request, CancellationToken cancellationToken)
         {
+            // get database info
             var member = await _appDbContext.Members.FindAsync(request.MemberId) ?? throw new Exception();
             var offerType  = await _appDbContext.OfferTypes.FindAsync(request.OfferTypeId) ?? throw new Exception();
 
+            // calculate offer value
             var value = await "https://localhost:7107"
                 .AppendPathSegment("/calculate-offer-value")
                 .SetQueryParams(new {
@@ -34,6 +36,7 @@ public class AssignOfferRequest : IRequest
                 .WithClient(new FlurlClient(new HttpClient(new HttpClientHandler {ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true})))
                 .GetJsonAsync<int>();
 
+            // calculate date expiring
             DateTime dateExpiring;
             switch (offerType.ExpirationType)
             {
@@ -49,11 +52,13 @@ public class AssignOfferRequest : IRequest
                     throw new ArgumentOutOfRangeException();
             }
 
-            var offer = new JimmyRefactoring.Domain.Offer(member, offerType, value, dateExpiring);
+            // assign offer
+            var offer = new Offer(member, offerType, value, dateExpiring);
 
             member.AssignedOffers.Add(offer);
             member.NumberOfActiveOffers++;
 
+            // save to database
             await _appDbContext.Offers.AddAsync(offer, cancellationToken);
             await _appDbContext.SaveChangesAsync(cancellationToken);
 
