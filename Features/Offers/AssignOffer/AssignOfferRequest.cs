@@ -25,7 +25,7 @@ public class AssignOfferRequest : IRequest
             var member = await _appDbContext.Members.FindAsync(request.MemberId) ?? throw new Exception();
             var offerType  = await _appDbContext.OfferTypes.FindAsync(request.OfferTypeId) ?? throw new Exception();
 
-            var value = await "https://localhost:7107".AppendPathSegment("/calculate-offer-value")
+            var value = await "https://localhost:7107".AppendPathSegment($"/calculate-offer-value?email={member.Email}&offerType={offerType.Name}")
                 .WithClient(new FlurlClient(new HttpClient(new HttpClientHandler {ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true})))
                 .GetJsonAsync<int>();
 
