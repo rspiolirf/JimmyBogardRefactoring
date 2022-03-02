@@ -1,12 +1,11 @@
-using System.Text.Json.Serialization;
 using JimmyRefactoring.Domain;
 using JimmyRefactoring.Infrastructure;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.>
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("JimmyRefactoringDb"));
 builder.Services.AddMediatR(typeof(Program));
 builder.Services.AddControllers().AddJsonOptions(x =>
@@ -20,7 +19,6 @@ using (var serviceScope = app.Services.CreateScope())
     InitializeDatabase(services.GetRequiredService<AppDbContext>());
 }
 
-// Configure the HTTP request pipeline.
 app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();
