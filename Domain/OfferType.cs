@@ -7,7 +7,7 @@ public class OfferType
     public int DaysValid { get; set; }
     public ExpirationType ExpirationType { get; set; }
     public String Name { get; set; }
-    public Offer Offer { get; set; }
+    public Offer? Offer { get; set; }
     public int OfferId { get; set; }
 
     public OfferType(int id, DateTime beginDate, int daysValid, ExpirationType expirationType, string name)
